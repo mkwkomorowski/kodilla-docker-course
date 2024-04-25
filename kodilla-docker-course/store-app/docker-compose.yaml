@@ -1,0 +1,71 @@
+version: "3.8"
+services:
+  store-frontend:
+    container_name: store-frontend
+    build:
+      context: ./store-frontend
+    ports:
+      - 3000:3000
+    expose:
+      - "3000"
+    env_file:
+      - ./env/frontend.env
+    networks:
+      - store-app
+    depends_on:
+      - products-api
+  products-api:
+    container_name: products-api
+    build:
+      context: ./products-api
+    ports:
+      - 8080:8080
+    expose:
+      - "8080"
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - db_mysql
+      - queue-rabbitmq
+    networks:
+      - store-app
+  notifications-api:
+    container_name: notifications-api
+    build:
+      context: ./notifications-api
+    ports:
+      - 5001:5001
+    expose:
+      - "5001"
+    networks:
+      - store-app
+  queue-rabbitmq:
+    container_name: queue-rabbitmq
+    image: rabbitmq
+    ports:
+      - 80:80
+    env_file:
+      - ./env/queue.env
+    networks:
+      - store-app
+    depends_on:
+      - notifications-api
+  db_mysql:
+    container_name: db_mysql
+    image: mysql
+    env_file:
+      - ./env/database.env
+    ports:  
+      - 3306:3306
+    expose:
+      - "3306"
+    networks:
+      - store-app
+    volumes:
+      - my-db:/data/db
+  
+networks:
+  store-app:
+
+volumes:
+  my-db:

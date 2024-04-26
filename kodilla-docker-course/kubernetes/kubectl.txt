@@ -1,0 +1,26 @@
+Uwaga: Pod każdym zadaniem podano zastosowaną komendę kubernetesa.
+
+Instrukcje do "Zadanie: działania w przestrzeni nazw":
+ - Wyświetl wszystkie zasoby typu deployment.
+   kubectl get deployments  --all-namespaces
+
+ - Wyświetl informacje na temat tego konkretnego zasobu typu deployment.
+   kubectl -n nginx-ns describe deployment
+
+ - Wyświetl tylko nazwy wszystkich podów w utworzonej przestrzeni nazw.
+   kubectl -n nginx-ns get pods -o name
+
+ - Wyświetl plik manifest w formacie yaml dla utworzonego zasobu typu deployment.
+   kubectl -n nginx-ns get deployment -o yaml
+
+ - Wypisz zawartość pliku /etc/hosts z istniejącego w przestrzeni nazw nginx-ns poda.
+   kubectl -n nginx-ns exec -it nginx-app-5c64488cdf-dbnhp -- cat /etc/hosts 
+
+ - Usuń pod istniejący w tej przestrzeni nazw.
+   kubectl -n nginx-ns delete pod nginx-app-5c64488cdf-dbnhp
+
+ - Usuń zasób deployment, który utworzyłeś.
+   kubectl -n nginx-ns delete deployment nginx-app
+
+ - Usuń utworzoną przestrzeń nazw.
+   kubectl delete namespace nginx-ns

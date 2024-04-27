@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: store-app-configmap
+data:
+  MYSQL_HOST: "db_mysql"
+  MYSQL_PORT: "3306"
+  MYSQL_DATABASE: "database1"
+  RABBITMQ_HOST: "queue-rabbitmq"
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_QUEUE_NAME: "queue_name_1"
+

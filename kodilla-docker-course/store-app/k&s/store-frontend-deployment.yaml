@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: store-frontend
+  template:
+    metadata:
+      labels:
+        component: store-frontend
+    spec:
+      containers:
+        - name: store-frontend-app
+          image: maciejk100/store-frontend:1.0.5
+          ports:
+            - containerPort: 3000

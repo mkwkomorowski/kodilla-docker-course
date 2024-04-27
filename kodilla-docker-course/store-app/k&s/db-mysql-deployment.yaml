@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb
+  name: db-mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: database
+      component: db-mysql
   template:
     metadata:
       labels:
-        component: database
+        component: db-mysql
     spec:
       containers:
-        - name: mongodb
-          image: mongo
+        - name: db-mysql
+          image: mysql
           ports:
-            - containerPort: 27017
+            - containerPort: 3306
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
@@ -29,10 +29,10 @@ spec:
                   name: mongodb-secret
                   key: MONGO_PASSWORD
           volumeMounts:
-            - name: mongodb-storage
+            - name: db-mysql-storage
               mountPath: /data/db
       volumes:
-        - name: mongodb-storage
+        - name: db-mysql-storage
           persistentVolumeClaim:
-            claimName: mongodb-pvc
+            claimName: db-mysql-pvc
             
